@@ -15,6 +15,8 @@ const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE },
@@ -44,14 +46,13 @@ app.post('/content/ai', async (req, res) => {
 
   try {
     const formattedPrompt = `Here is an article or passage:
-"""
-${prompt}
-"""
-
-Give exactly two key points about whether it contains misinformation or disinformation, and why.`;
+    """
+    ${prompt}
+    """
+    Give exactly two key points about whether it contains misinformation or disinformation, and why.`;
 
     const result = await geminiModel.generateContent(formattedPrompt);
-    const responseText = result.response.text();
+    const responseText = result.response;
 
     res.json({ response: responseText });
   } catch (error) {
