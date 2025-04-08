@@ -61,7 +61,7 @@ Give exactly two key points about whether it contains misinformation or disinfor
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'pages', 'index.js'));
+  res.sendFile(path.join(process.cwd(), 'pages', 'script.js'));
 });
 
 app.use((req, res) => {
