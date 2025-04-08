@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
   
           const data = await response.json();
   
-          console.log(data.response);
+          const content = data.candidates[0].content.parts[0].text;
+          const points = content
+            .split('\n')
+            .filter(line => line.trim())
+            .map(line => line.trim());
   
-          if (response.ok) {
-            const responseText = typeof data.response === 'object' ? JSON.stringify(data.response, null, 2) : data.response;
-            keyPointsList.innerHTML = `<li>${responseText}</li>`;
-          } else {
-            keyPointsList.innerHTML = `<li>Error: ${data.error}</li>`;
-          }
+          keyPointsList.innerHTML = points.map(point => `<li>${point}</li>`).join('');
+          
         } catch (error) {
           console.error('Request failed:', error);
           keyPointsList.innerHTML = `<li>Something went wrong. Try again later.</li>`;
