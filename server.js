@@ -1,5 +1,5 @@
 import express from 'express';
-import path from 'path';  // For path resolution
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,25 +10,20 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'pages')));
 
-app.get("/:folder", (req, res, next) => {
-  const folder = req.params.folder;
-  const filePath = path.join(__dirname, 'pages', folder, 'index.html');
+app.get("/:page", (req, res, next) => {
+  const page = req.params.page;
+  const filePath = path.join(__dirname, 'pages', `${page}.js`);
+  
   res.sendFile(filePath, (err) => {
-    if (err) next();
-  });
-});
-
-app.get("/:folder/*", (req, res, next) => {
-  const folder = req.params.folder;
-  const subPath = req.params[0];
-  const filePath = path.join(__dirname, 'pages', folder, subPath);
-  res.sendFile(filePath, (err) => {
-    if (err) next();
+    if (err) {
+      console.error(err);
+      next();
+    }
   });
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+  res.sendFile(path.join(__dirname, 'pages', 'index.js'));
 });
 
 app.use((req, res) => {
