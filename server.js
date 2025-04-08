@@ -61,7 +61,7 @@ Give exactly two key points about whether it contains misinformation or disinfor
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'pages', 'script.js'));
+  res.sendFile(path.join(__dirname, 'pages', 'index.html'));
 });
 
 app.use((req, res) => {
@@ -69,5 +69,5 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
