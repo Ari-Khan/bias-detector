@@ -1,12 +1,12 @@
 import express from 'express';
-import path from 'path';
+import path from 'path';  // For path resolution
 import { fileURLToPath } from 'url';
-
-const app = express();
-const port = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'pages')));
 
