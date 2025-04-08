@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         keyPointsList.innerHTML = '<li>Loading...</li>';
   
         try {
-          const response = await fetch('http://trunalyze.vercel.app/bias-detector.html', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt }),
-          });
+            const response = await fetch('https://trunalyze.vercel.app/bias-detector.html', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt }),
+              });
   
           const data = await response.json();
   
