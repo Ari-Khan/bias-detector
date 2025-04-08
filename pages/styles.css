@@ -217,3 +217,19 @@ body {
   margin-left: 825px;
   padding: 20px;
 }
+
+#credibilityDisplay {
+  font-size: 18px;              /* Set the font size */
+  font-weight: bold;            /* Make the text bold */
+  color: #333;                  /* Dark grey color for the text */
+  background-color: #f0f0f0;    /* Light grey background */
+  padding: 10px 20px;           /* Add padding around the text */
+  border-radius: 8px;           /* Rounded corners */
+  text-align: center;           /* Center the text */
+  margin-top: 20px;             /* Add some space above the element */
+  border: 1px solid #ccc;      /* Light border around the box */
+  width: fit-content;           /* Adjust the width to fit the content */
+  max-width: 300px;             /* Limit the max width */
+  margin-left: 845px;
+}
+
