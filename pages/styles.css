@@ -149,6 +149,7 @@ body {
   right: 0;
   background-color: #ffffff;
   padding: 10px;
+  padding-left: 40px;
   border: none;
 }
 
@@ -157,7 +158,6 @@ body {
   height: 100%; /* Use full height of the .text-input-box */
   font-family: 'Playfair Display', serif;
   font-size: 16px;
-  padding: 10px;
   border: none; /* Remove border */
   outline: none; /* Remove outline */
   border-radius: 5px;
@@ -194,3 +194,26 @@ body {
   font-size: 15px;
 }
 
+.chart-container {
+  display: flex; /* Use flexbox for horizontal layout */
+  justify-content: space-between; /* Space out the two sections */
+  align-items: center; /* Center items vertically */
+}
+
+.key-points-box {
+  flex: 1; /* Allow this section to take up available space */
+  margin-right: 20px; /* Space between the key points and the chart */
+}
+
+.chart-box {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-left: 825px;
+  padding: 20px;
+}
