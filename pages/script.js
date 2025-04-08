@@ -20,13 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
           const data = await response.json();
   
-          if (response.ok) {
-            const points = data.response
-              .split('\n')
-              .filter(line => line.trim())
-              .slice(0, 2);
+          console.log(data.response);
   
-            keyPointsList.innerHTML = points.map(point => `<li>${point}</li>`).join('');
+          if (response.ok) {
+            keyPointsList.innerHTML = `<li>${data.response}</li>`;
           } else {
             keyPointsList.innerHTML = `<li>Error: ${data.error}</li>`;
           }
