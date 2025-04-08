@@ -36,7 +36,7 @@ app.post('/pages/bias-detector.html', async (req, res) => {
   }
 
   try {
-    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser exactly in the provided format. Format: "(Point 1)|(Point 2)|(Right Bias Percent)|(Left Bias Percent)"`;
+    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser exactly in the provided format. Format: "(Point 1)|(Point 2)|(Right Bias Number / 100)|(Left Bias Number / 100)"`;
     
     const result = await geminiModel.generateContent(formattedPrompt);
     const responseText = result.response.text();
