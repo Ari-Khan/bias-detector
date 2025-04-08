@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: Playfair Display;
+  font-family: 'Playfair Display', serif;
   color: #ffffff;
   overflow-x: hidden;
   transition: all 0.3s ease;
@@ -17,25 +17,34 @@ body {
   position: fixed;
   left: 0;
   top: 0%;
-  transition: width 0.5s ease;
   background-color: rgb(255, 255, 255);
   width: 75px;
-  height: 1000px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: top;
 }
 
-.material-icons.blue { color: #0f2851; }
+.material-icons.blue {
+  color: #0f2851;
+}
 
-.sidebar:hover {
-  width: 200px;
+.sidebar li.settings {
+  margin-top: 200px;
+}
+
+.sidebar li.dot .material-icons.blue{
+  transform: scale(2);
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+}
+
+.header{
+  font-size: 32px;
 }
 
 .sidebar li {
@@ -67,10 +76,48 @@ body {
 }
 
 .content {
-  margin-left: 75px;
+  margin-left: 100px;
   padding: 20px;
+}
+
+.mid-content{
+  margin-left: 100px;
+  padding: 20px;
+  font-weight: 100;
+}
+
+.mid-content .large-text {
+  padding-top: 40px;
+  font-size: 64px;
+}
+
+.mid-content .small-text {
+  padding-top: 10px;
+  font-size: 20px;
+  padding-bottom: 30px;
 }
 
 .content h1 {
   font-size: 32px;
+}
+
+.button-link button {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  background-color: #cccccc;
+  color: rgb(0, 0, 0);
+  width: 150px;
+  height: 50px;
+  padding: 10px 20px;
+  padding-top: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.5s ease;
+}
+
+.button-link button:hover {
+  background-color: #888888; /* Darker green when hovered */
 }
