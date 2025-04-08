@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const geminiModel = genAI.getGenerativeModel({
-  model: 'gemini-2.0-flash-exp',
+  model: 'gemini-1.5-flash-stable',
   safetySettings: [
   ],
   generationConfig: {
@@ -36,7 +36,7 @@ app.post('/pages/bias-detector.html', async (req, res) => {
   }
 
   try {
-    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser EXACTLY in the provided format. DO NOT INCLUDE EXTRA TEXT BEFORE OR AFTER THE RESPONSE, ONLY RESPOND WITH A COMPLETE RESPONSE, DO NOT RESPOND WITH THE TEMPLATE. Format: "Point 1|Point 2|Bias NUMBER Towards Right out of 100|Bias NUMBER Towards Left out of 100|Credibility NUMBER out of 100". Example prompt "Democrats are a weak party. - Fox News" Response: "There is not sufficient evidence to support the claim|The claim could have been made by biased individuals|20|80|40". Example prompt 2: "Trump is an unqualified candidate. - New York Times" Response: "There is not sufficient evidence to support the claim|The claim attempts to degrade a person by commenting about their experience|70|30|50"`;
+    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser EXACTLY in the provided format. A left-bias would be closer to the principles socialism while a right bias is closer to the principles of fascism. DO NOT INCLUDE EXTRA TEXT BEFORE OR AFTER THE RESPONSE, ONLY RESPOND WITH A COMPLETE RESPONSE, DO NOT RESPOND WITH THE TEMPLATE. Format: "Point 1|Point 2|Bias NUMBER Towards Right out of 100|Bias NUMBER Towards Left out of 100|Credibility NUMBER out of 100". Example prompt "Democrats are a weak party. - Fox News" Response: "There is not sufficient evidence to support the claim|The claim could have been made by biased individuals|20|80|40". Example prompt 2: "Trump is an unqualified candidate. - New York Times" Response: "There is not sufficient evidence to support the claim|The claim attempts to degrade a person by commenting about their experience|70|30|50"`;
     
     const result = await geminiModel.generateContent(formattedPrompt);
     const responseText = result.response.text();
