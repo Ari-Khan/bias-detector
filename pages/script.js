@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(data.response);
   
           if (response.ok) {
-            keyPointsList.innerHTML = `<li>${data.response}</li>`;
+            const responseText = typeof data.response === 'object' ? JSON.stringify(data.response, null, 2) : data.response;
+            keyPointsList.innerHTML = `<li>${responseText}</li>`;
           } else {
             keyPointsList.innerHTML = `<li>Error: ${data.error}</li>`;
           }
