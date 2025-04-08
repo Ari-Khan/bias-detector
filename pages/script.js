@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const data = await response.json();
+                console.log('Response from server:', data);
 
                 if (data && data.response) {
                     // Split the response by '|' to get the points and bias percentages
