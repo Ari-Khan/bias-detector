@@ -24,10 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Response from server:', data);
 
                 if (data && data.response) {
-                    // Split the response by '|' to get the points and bias percentages
-                    const [point1, point2, rightBiasPercent, leftBiasPercent, credibility] = data.response.split('|').map(item => item.trim());
+                    let [point1, point2, rightBiasPercent, leftBiasPercent, credibility] = data.response.split('|').map(item => item.trim());
 
-                    // Update the key points list
+                    rightBiasPercent = isNaN(parseFloat(rightBiasPercent)) || parseFloat(rightBiasPercent) === 0 
+                        ? 50 : parseFloat(rightBiasPercent);
+                    leftBiasPercent = isNaN(parseFloat(leftBiasPercent)) || parseFloat(leftBiasPercent) === 0 
+                        ? 50 : parseFloat(leftBiasPercent);
+
                     keyPointsList.innerHTML = `
                         <li>${point1}</li>
                         <li>${point2}</li>
