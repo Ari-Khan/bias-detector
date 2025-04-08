@@ -14,8 +14,8 @@ const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());  // Enable CORS for all origins
-app.use(bodyParser.json());  // Parse JSON bodies
+app.use(cors());
+app.use(bodyParser.json()); 
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const geminiModel = genAI.getGenerativeModel({
@@ -36,10 +36,10 @@ app.post('/pages/bias-detector.html', async (req, res) => {
   }
 
   try {
-    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\nGive exactly two key points about whether it contains misinformation or disinformation, and why.`;
+    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\nGive exactly two very brief key points about whether it contains misinformation or disinformation, and why.`;
     
     const result = await geminiModel.generateContent(formattedPrompt);
-    const responseText = result.response;
+    const responseText = result.response.text();
 
     res.json({ response: responseText });
   } catch (error) {
