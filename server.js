@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,27 +14,21 @@ const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const safetySettings = [
-  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE },
-  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE },
-  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
-];
-
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors());  // Enable CORS for all origins
+app.use(bodyParser.json());  // Parse JSON bodies
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const geminiModel = genAI.getGenerativeModel({
   model: 'gemini-2.0-flash-exp',
-  safetySettings,
+  safetySettings: [
+  ],
   generationConfig: {
     maxOutputTokens: 2048,
     temperature: 1.0,
   },
 });
 
-app.post('/content/ai', async (req, res) => {
+app.post('/', async (req, res) => {
   const { prompt } = req.body;
 
   if (!prompt) {
@@ -43,12 +36,8 @@ app.post('/content/ai', async (req, res) => {
   }
 
   try {
-    const formattedPrompt = `Here is an article or passage:
-    """
-    ${prompt}
-    """
-    Give exactly two key points about whether it contains misinformation or disinformation, and why.`;
-
+    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\nGive exactly two key points about whether it contains misinformation or disinformation, and why.`;
+    
     const result = await geminiModel.generateContent(formattedPrompt);
     const responseText = result.response;
 

@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         keyPointsList.innerHTML = '<li>Loading...</li>';
   
         try {
-            const response = await fetch('https://trunalyze.vercel.app/pages/bias-detector.html', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt }),
-              });
+          const response = await fetch('https://trunalyze.vercel.app/bias-detector.html', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt }),
+          });
   
           const data = await response.json();
   
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const points = data.response
               .split('\n')
               .filter(line => line.trim())
-              .slice(0, 2); // Ensure only two points
+              .slice(0, 2);
   
             keyPointsList.innerHTML = points.map(point => `<li>${point}</li>`).join('');
           } else {
