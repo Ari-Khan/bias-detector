@@ -28,7 +28,7 @@ const geminiModel = genAI.getGenerativeModel({
   },
 });
 
-app.post('/', async (req, res) => {
+app.post('/pages/bias-detector.html', async (req, res) => {
   const { prompt } = req.body;
 
   if (!prompt) {
