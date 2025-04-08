@@ -7,11 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const prompt = inputBox.value.trim();
         if (!prompt) return;
   
-        // Optional: Show loading message
         keyPointsList.innerHTML = '<li>Loading...</li>';
   
         try {
-          const response = await fetch('https://trunalyze.vercel.app/bias-detector.html', {
+          const response = await fetch('https://trunalyze.vercel.app/pages/bias-detector.html', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
