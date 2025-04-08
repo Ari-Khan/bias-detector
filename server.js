@@ -1,42 +1,40 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import next from 'next';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+const app = express();
+const port = process.env.PORT || 3000;
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const server = express();
+app.use(express.static(path.join(__dirname, 'pages')));
 
-server.use(cors());
-server.use(bodyParser.json());
-
-server.post('/content/ai', (req, res) => {
-  const { prompt } = req.body;
-  if (prompt) {
-    res.json({ response: `Received prompt: ${prompt}` });
-  } else {
-    res.status(400).json({ error: 'Prompt is required!' });
-  }
-});
-
-server.all('*', (req, res) => {
-  return handle(req, res);
-});
-
-// Start Next.js app
-app.prepare().then(() => {
-  server.listen(process.env.PORT || 3000, (err) => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${process.env.PORT || 3000}`);
+app.get("/:folder", (req, res, next) => {
+  const folder = req.params.folder;
+  const filePath = path.join(__dirname, 'pages', folder, 'index.html');
+  res.sendFile(filePath, (err) => {
+    if (err) next();
   });
 });
 
-export default server;
+app.get("/:folder/*", (req, res, next) => {
+  const folder = req.params.folder;
+  const subPath = req.params[0];
+  const filePath = path.join(__dirname, 'pages', folder, subPath);
+  res.sendFile(filePath, (err) => {
+    if (err) next();
+  });
+});
 
-export const handler = server;
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+});
 
+app.use((req, res) => {
+  res.status(404).send("404 Not Found");
+});
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});
