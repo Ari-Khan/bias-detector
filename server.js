@@ -1,24 +1,21 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import cors from 'cors';  // Import CORS
-import dotenv from 'dotenv';  // Import dotenv for environment variables
+import cors from 'cors';
+import dotenv from 'dotenv';
+import next from 'next';
 
-// Initialize environment variables
 dotenv.config();
 
-const app = express();
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-// Middleware setup
-app.use(cors());  // Enable CORS for all origins
-app.use(bodyParser.json());  // Parse incoming JSON requests
+const server = express();
 
-// Route example (you can add your logic here)
-app.get('/', (req, res) => {
-  res.send('Hello from Express on Vercel!');
-});
+server.use(cors());
+server.use(bodyParser.json());
 
-// Example POST endpoint (you can use this for your AI-related functionality)
-app.post('/content/ai', (req, res) => {
+server.post('/content/ai', (req, res) => {
   const { prompt } = req.body;
   if (prompt) {
     res.json({ response: `Received prompt: ${prompt}` });
@@ -27,9 +24,19 @@ app.post('/content/ai', (req, res) => {
   }
 });
 
-// Export the app for Vercel to run as a serverless function
-export default app;
+server.all('*', (req, res) => {
+  return handle(req, res);
+});
 
-// Vercel will call this handler when requests are sent to the API route
-export const handler = app;
+// Start Next.js app
+app.prepare().then(() => {
+  server.listen(process.env.PORT || 3000, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${process.env.PORT || 3000}`);
+  });
+});
+
+export default server;
+
+export const handler = server;
 
