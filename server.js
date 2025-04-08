@@ -36,7 +36,7 @@ app.post('/pages/bias-detector.html', async (req, res) => {
   }
 
   try {
-    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser EXACTLY in the provided format. DO NOT INCLUDE EXTRA TEXT BEFORE OR AFTER THE RESPONSE. Format: "Point 1|Point 2|Right Bias Number out of 100|Left Bias Number out of 100|Credibility out of 100". Example response: "There is not sufficient evidence to support the claim|The claim could have been made by biased individuals|30|70|40".`;
+    const formattedPrompt = `Here is an article or passage:\n"""${prompt}"""\n. Create points about misinformation and disinformation and anser EXACTLY in the provided format. DO NOT INCLUDE EXTRA TEXT BEFORE OR AFTER THE RESPONSE. Format: "Point 1|Point 2|Bias Towards Right out of 100|Bias Towards Left out of 100|Credibility out of 100". Example response: "There is not sufficient evidence to support the claim|The claim could have been made by biased individuals|30|70|40".`;
     
     const result = await geminiModel.generateContent(formattedPrompt);
     const responseText = result.response.text();

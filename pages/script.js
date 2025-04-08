@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const inputBox = document.querySelector('.text-input-box');
     const keyPointsList = document.getElementById('key-points-list');
+    const credibilityDisplay = document.getElementById('credibilityDisplay'); // Add an element to display credibility
 
     inputBox.addEventListener('keypress', async (e) => {
         if (e.key === 'Enter') {
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (data && data.response) {
                     // Split the response by '|' to get the points and bias percentages
-                    const [point1, point2, rightBiasPercent, leftBiasPercent] = data.response.split('|').map(item => item.trim());
+                    const [point1, point2, rightBiasPercent, leftBiasPercent, credibility] = data.response.split('|').map(item => item.trim());
 
                     // Update the key points list
                     keyPointsList.innerHTML = `
@@ -32,9 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         <li>${point2}</li>
                     `;
 
+                    // Update the credibility display (for example: "Credibility: 7/10")
+                    if (credibilityDisplay) {
+                        credibilityDisplay.innerHTML = `Overall Credibility: ${credibility}/100`; // Display credibility score
+                    }
+
+                    // Check if the pie chart exists and destroy it before creating a new one
+                    if (window.biasPieChart instanceof Chart) {
+                        window.biasPieChart.destroy();  // Safely call destroy if it's a valid Chart instance
+                    }
+
                     // Update the pie chart with the right and left bias percentages
-                    const ctx = document.getElementById('biasPieChart').getContext('2d');
-                    const biasPieChart = new Chart(ctx, {
+                    const pieCtx = document.getElementById('biasPieChart').getContext('2d');
+                    window.biasPieChart = new Chart(pieCtx, {
                         type: 'pie',
                         data: {
                             labels: ['Left Bias', 'Right Bias'],
@@ -61,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }
                     });
+
                 } else {
                     keyPointsList.innerHTML = `<li>No response received.</li>`;
                 }
