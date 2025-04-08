@@ -15,8 +15,6 @@ const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 const safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
   { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE },
@@ -60,6 +58,8 @@ app.post('/content/ai', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate AI response.' });
   }
 });
+
+app.use(express.static(path.join(__dirname, 'pages')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
